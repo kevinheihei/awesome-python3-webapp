@@ -1,7 +1,0 @@
-# sublime:
-*.sublime-project
-*.sublime-workspace
-.git
-.idea
-venv
-www/__pycache__
