@@ -37,6 +37,7 @@ from jinja2 import Environment, FileSystemLoader
 
 from www.orm import *
 from www.coreweb import *
+from www.config import *
 #from www.coroweb import add_routes
 
 # 初始化jinjia2模板环境
@@ -97,7 +98,6 @@ async def logger_factory(app, handler):
         return (await handler(request))
     return logger
 
-
 # 处理视图函数返回值，制作response的middleware
 # 请求对象request的处理工序：
 #              logger_factory => response_factory => RequestHandler().__call__ => handler
@@ -155,7 +155,7 @@ async def response_factory(app, handler):
 
 
 async def init(loop):
-    await create_pool(loop=loop, host='127.0.0.1', port=3306, user='root', password='123', db='test')
+    await create_pool(loop=loop, **configs['db'])
     app = web.Application(loop=loop, middlewares=[
         logger_factory, response_factory
     ])

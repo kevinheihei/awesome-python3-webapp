@@ -1,7 +1,14 @@
 
 from www.coreweb import  get,post
 
-# 主页
+' url handlers '
+
+from www.models import User, Comment, Blog, next_id
+
 @get('/')
-async def index(request, *, page='1'):
-	return 'index'
+async def index(request):
+    users = await User.findAll()
+    return {
+        '__template__': 'test.html',
+        'users': users
+    }

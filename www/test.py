@@ -8,10 +8,10 @@ from www.models import User,Blog,Comment
 @asyncio.coroutine
 def test( loop ):
     yield from create_pool( loop = loop, user='root', password='123', db='test' )
-    u = User(name='kevin',email='kevin@test.com',passwd='test',image='about:blank')
-    #yield from u.save()
-    r = yield from u.findAll()
-    print(r)
+    u = User(name='aaa', email='aaa@qq.com', passwd='aaa', image='about:blank')
+    yield from u.save()
+#    r = yield from u.findAll()
+#    print(r)
     yield from destory_pool()
 
 if __name__ == '__main__':
