@@ -122,6 +122,7 @@ async def response_factory(app, handler):
         if isinstance(r, dict):# r为dict对象时
             # 在后续构造视图函数返回值时，会加入__template__值，用以选择渲染的模板
             template = r.get('__template__')
+            r['__user__'] = request.__user__
             if template is None:
                 # 不带模板信息，返回json对象
                 resp = web.Response(body=json.dumps(r, ensure_ascii=False, default=lambda o: o.__dict__).encode('utf-8'))
@@ -133,6 +134,7 @@ async def response_factory(app, handler):
             else: # 带模板信息，渲染模板
                 # app['__templating__']获取已初始化的Environment对象，调用get_template()方法返回Template对象
                 # 调用Template对象的render()方法，传入r渲染模板，返回unicode格式字符串，将其用utf-8编码
+
                 resp = web.Response(body=app['__templating__'].get_template(template).render(**r).encode('utf-8'))
                 resp.content_type = 'text/html;charset=utf-8'
                 return resp
